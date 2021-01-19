@@ -14,19 +14,21 @@ app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, "./public/notes.html"));
 });
 
-
-
 app.get("/api/notes", (req, res) => {
     const rawData = fs.readFileSync(path.join(__dirname, "./db/db.json"));
-    const parsedData = JSON.parse(rawData)
-    res.json(parsedData)
-})
-
-
+    const parsedData = JSON.parse(rawData);
+    res.json(parsedData);
+});
 
 app.get('*', (req, res) => {
     res.sendFile(path.join(__dirname, "./public/index.html"));
 });
+
+app.post("/api/notes", (req, res) => {
+    const newNote = req.body;
+    console.log(newNote);
+    res.status(200).send('Post received and about to parse')
+})
 
 app.listen(PORT, () => {
     console.log('Server listening on port', PORT)
