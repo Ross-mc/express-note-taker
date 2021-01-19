@@ -24,6 +24,9 @@ app.post("/api/notes", (req, res) => {
     const newNote = req.body;
     const rawData = fs.readFileSync(path.join(__dirname, "./db/db.json"));
     const parsedData = JSON.parse(rawData);
+    //if this is the first input we set the id the 0, otherwise we set it to 1 + the last element in the array, this is to ensure that we
+    //dont get repeat id's when we delete later
+    newNote.id = parsedData.length === 0 ? 0 : parsedData[parsedData.length-1].id + 1
     parsedData.push(newNote);
     fs.writeFileSync(path.join(__dirname, "./db/db.json"), JSON.stringify(parsedData))
     res.status(200).send(parsedData)
