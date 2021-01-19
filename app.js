@@ -26,6 +26,10 @@ app.get('*', (req, res) => {
 
 app.post("/api/notes", (req, res) => {
     const newNote = req.body;
+    const rawData = fs.readFileSync(path.join(__dirname, "./db/db.json"));
+    const parsedData = JSON.parse(rawData);
+    parsedData.push(newNote);
+    fs.writeFileSync(path.join(__dirname, "./db/db.json"), JSON.stringify(parsedData))
     res.status(200).send('Post received and about to parse')
 })
 
