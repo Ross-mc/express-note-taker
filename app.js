@@ -26,7 +26,6 @@ app.get('*', (req, res) => {
 
 app.post("/api/notes", (req, res) => {
     const newNote = req.body;
-    console.log(newNote);
     res.status(200).send('Post received and about to parse')
 })
 
