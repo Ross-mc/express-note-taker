@@ -32,6 +32,18 @@ app.post("/api/notes", (req, res) => {
     res.status(200).send(parsedData)
 });
 
+app.delete("/api/notes/:id", (req, res) => {
+    const idToDelete = parseInt(req.params.id);
+
+    const rawData = fs.readFileSync(path.join(__dirname, "./db/db.json"));
+    const parsedData = JSON.parse(rawData);
+    console.log(parsedData)
+    const filteredData = parsedData.filter(elem => elem.id !== idToDelete);
+    console.log(filteredData)
+    fs.writeFileSync(path.join(__dirname, "./db/db.json"), JSON.stringify(filteredData))
+    res.status(200).send(filteredData)
+})
+
 //this enables us to serve the static js and css files
 
 app.use(express.static(path.join(__dirname, "./public")));
