@@ -13,31 +13,31 @@ app.use(express.json());
 const readDB = () => {
     const rawData = fs.readFileSync(path.join(__dirname, "./db/db.json"));
     const parsedData = JSON.parse(rawData);
-    return parsedData
+    return parsedData;
 };
 
 const writeToDB = data => {
-    fs.writeFileSync(path.join(__dirname, "./db/db.json"), data)
-}
+    fs.writeFileSync(path.join(__dirname, "./db/db.json"), data);
+};
 
 app.get('/notes', (req, res) => {
     res.sendFile(path.join(__dirname, "./public/notes.html"));
 });
 
 app.get("/api/notes", (req, res) => {
-    const parsedData = readDB()
+    const parsedData = readDB();
     res.json(parsedData);
 });
 
 app.post("/api/notes", (req, res) => {
     const newNote = req.body;
-    const parsedData = readDB()
+    const parsedData = readDB();
     //if this is the first input we set the id the 0, otherwise we set it to 1 + the last element in the array, this is to ensure that we
     //dont get repeat id's when we delete later
-    newNote.id = parsedData.length === 0 ? 0 : parsedData[parsedData.length-1].id + 1
+    newNote.id = parsedData.length === 0 ? 0 : parsedData[parsedData.length-1].id + 1;
     parsedData.push(newNote);
     writeToDB(JSON.stringify(parsedData));
-    res.status(200).send(parsedData)
+    res.status(200).send(parsedData);
 });
 
 app.delete("/api/notes/:id", (req, res) => {
@@ -45,8 +45,8 @@ app.delete("/api/notes/:id", (req, res) => {
     const parsedData = readDB();
     const filteredData = parsedData.filter(elem => elem.id !== idToDelete);
     writeToDB(JSON.stringify(filteredData));
-    res.status(200).send(filteredData)
-})
+    res.status(200).send(filteredData);
+});
 
 //this enables us to serve the static js and css files
 
@@ -59,5 +59,5 @@ app.get('*', (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log('Server listening on port', PORT)
+    console.log('Server listening on port', PORT);
 });
