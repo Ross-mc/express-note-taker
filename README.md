@@ -16,4 +16,4 @@ If you would like to create your own version of this application, clone the repo
 
 ## Live
 
-The live website has been deployed on Heroku and can be viewed [here](http://warm-fortress-30870.herokuapp.com/).
+The live website has been deployed on Heroku and can be viewed [here](https://warm-fortress-30870.herokuapp.com/).
